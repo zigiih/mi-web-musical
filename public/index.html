@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player - Enhanced</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="menu-toggle" id="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <h2><i class="fas fa-music"></i> Playlists</h2>
+            <div class="playlist-form">
+                <input type="text" id="new-playlist-name" placeholder="Nueva playlist...">
+                <button id="add-playlist-btn"><i class="fas fa-plus"></i></button>
+            </div>
+            <ul id="playlists-list">
+                <!-- Playlists will be populated here -->
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1><i class="fas fa-compact-disc"></i> Canciones</h1>
+                <div class="add-song-form">
+                    <input type="text" id="song-url" placeholder="Pega la URL de YouTube aquí...">
+                    <button id="add-song-btn"><i class="fas fa-download"></i> Descargar</button>
+                </div>
+                <div id="status-message" class="status-message"></div>
+            </header>
+            
+            <div class="songs-container">
+                <ul id="songs-list">
+                    <!-- Songs will be populated here -->
+                </ul>
+            </div>
+        </main>
+
+        <footer class="player-controls">
+            <div class="song-info">
+                <img id="current-track-img" src="https://via.placeholder.com/64/722f37/ffffff?text=♪" alt="Album Art">
+                <div class="track-details">
+                    <p id="current-track-title">Selecciona una canción</p>
+                    <p id="current-track-artist">...</p>
+                </div>
+            </div>
+            
+            <div class="controls-center">
+                <div class="main-controls">
+                    <button id="prev-btn"><i class="fas fa-step-backward"></i></button>
+                    <button id="play-pause-btn"><i class="fas fa-play"></i></button>
+                    <button id="next-btn"><i class="fas fa-step-forward"></i></button>
+                </div>
+                <div class="progress-container">
+                    <span id="current-time">0:00</span>
+                    <input type="range" id="progress-bar" value="0" min="0" max="100">
+                    <span id="total-duration">0:00</span>
+                </div>
+            </div>
+
+            <div class="controls-right">
+                <button id="shuffle-btn"><i class="fas fa-random"></i></button>
+                <button id="repeat-btn"><i class="fas fa-redo"></i></button>
+                <i class="fas fa-volume-up"></i>
+                <input type="range" id="volume-control" min="0" max="1" step="0.01" value="1">
+            </div>
+        </footer>
+    </div>
+
+    <audio id="audio-player"></audio>
+    
+    <script>
+        // Enhanced JavaScript for mobile menu
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('show');
+            });
+            
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('show');
+            });
+            
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', (e) => {
+                if (window.innerWidth <= 1024) {
+                    if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+                        sidebar.classList.remove('open');
+                        overlay.classList.remove('show');
+                    }
+                }
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 1024) {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('show');
+                }
+            });
+        });
+        
+      
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>
